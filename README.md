@@ -55,20 +55,27 @@ python --version
 Должно вывести: Python 3.10.x
 Linux (Ubuntu/Debian)
 
+```
 sudo apt update
 sudo apt install software-properties-common
 sudo add-apt-repository ppa:deadsnakes/ppa
 sudo apt update
 sudo apt install python3.10 python3.10-venv python3.10-dev
 python3.10 --version
-macOS
+```
 
+macOS
+```
 Через Homebrew
 brew install python@3.10
 python3.10 --version
-Установка зависимостей
+```
 
+Установка зависимостей
+```
 pip install -r requirements.txt
+```
+
 # Содержимое requirements.txt:
 
 
@@ -90,8 +97,10 @@ punkt - токенизатор
 stopwords - стоп-слова
 
 # Запуск
-
+```
 python app.py
+```
+
 # Что произойдёт:
 
 Загрузка и анализ датасета
@@ -152,11 +161,15 @@ X_tfidf, tfidf_vectorizer, tfidf_time = classic.apply_tfidf(s_processed)
 
 Решение: Установите PyTorch отдельно по инструкции с официального сайта. Для CPU-версии:
 
-
+```
 pip install torch --index-url https://download.pytorch.org/whl/cpu
-Затем установите остальные зависимости:
+```
 
+Затем установите остальные зависимости:
+```
 pip install transformers scikit-learn pandas numpy matplotlib nltk gensim
+```
+
 ## 4. Нехватка оперативной памяти при выполнении BERT
 Проблема: Модель BERT требует много RAM (8+ GB), на слабых компьютерах процесс может прерваться.
 
@@ -166,8 +179,9 @@ pip install transformers scikit-learn pandas numpy matplotlib nltk gensim
 Проблема: NLTK данные не скачались автоматически из-за отсутствия интернета или прав доступа.
 
 Решение: Скачайте данные вручную перед первым запуском:
-
+```
 python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
+```
 Созданные файлы
 # После успешного выполнения скрипта в папке с проектом появятся:
 
