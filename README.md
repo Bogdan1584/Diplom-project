@@ -1,7 +1,7 @@
-#SMS Spam Detection - Сравнительный анализ методов векторизации
+# SMS Spam Detection - Сравнительный анализ методов векторизации
 Проект для обнаружения спам-сообщений (SMS) с использованием различных методов векторизации текста: классических (BoW, TF-IDF) и современных плотных эмбеддингов (Word2Vec, BERT).
 
-О проекте
+# О проекте
 Проект реализует сравнительный анализ четырёх методов векторного представления текста для задачи классификации спама:
 
 Bag of Words (BoW) - классический "мешок слов"
@@ -22,7 +22,7 @@ BERT - контекстуальные эмбеддинги (bert-base-uncased)
 
 Сохранение результатов в CSV
 
-Датасет
+# Датасет
 Используется классический датасет SMS Spam Collection:
 
 Источник: spam.csv (включён в репозиторий)
@@ -35,26 +35,26 @@ v2 - текст сообщения
 
 Размер: ~5572 сообщения (13.4% спама, 86.6% ham)
 
-Требования
+# Требования
 Python 3.10 (версии 3.11-3.12 работают, 3.13+ могут иметь проблемы, 3.14 не поддерживается)
 
 8+ GB RAM (рекомендуется 16 GB для BERT)
 
 GPU (опционально, для ускорения BERT)
 
-Установка Python 3.10
-Windows
+# Установка Python 3.10
+# Windows
 Скачайте установщик с официального сайта
 
 Запустите установку, обязательно отметьте "Add Python to PATH"
 
 Проверьте установку:
-
-bash
+```
 python --version
-# Должно вывести: Python 3.10.x
+```
+Должно вывести: Python 3.10.x
 Linux (Ubuntu/Debian)
-bash
+
 sudo apt update
 sudo apt install software-properties-common
 sudo add-apt-repository ppa:deadsnakes/ppa
@@ -62,14 +62,14 @@ sudo apt update
 sudo apt install python3.10 python3.10-venv python3.10-dev
 python3.10 --version
 macOS
-bash
-# Через Homebrew
+
+Через Homebrew
 brew install python@3.10
 python3.10 --version
 Установка зависимостей
-bash
+
 pip install -r requirements.txt
-Содержимое requirements.txt:
+# Содержимое requirements.txt:
 
 
 scikit-learn    # ML модели и метрики
@@ -82,17 +82,17 @@ torch           # Бэкенд для BERT
 transformers    # BERT модель
 Важно: При установке torch и transformers может потребоваться до 2-3 минут.
 
-NLTK данные
+# NLTK данные
 При первом запуске автоматически скачаются:
 
 punkt - токенизатор
 
 stopwords - стоп-слова
 
-Запуск
-bash
+# Запуск
+
 python app.py
-Что произойдёт:
+# Что произойдёт:
 
 Загрузка и анализ датасета
 
@@ -120,7 +120,7 @@ Word2Vec: ~30 секунд
 
 BERT: 5-15 минут (зависит от CPU/GPU, обрабатывает 2000 сообщений)
 
-Структура файлов
+# Структура файлов
 
 sms-spam-detection/
 ├── app.py              # Главный скрипт (всё в одном файле)
@@ -133,8 +133,8 @@ sms-spam-detection/
 ├── cv_results.csv             # Результаты кросс-валидации
 ├── embeddings_pca.png         # Визуализация PCA (BoW, TF-IDF, W2V)
 └── bert_pca.png               # Визуализация BERT
-Возможные проблемы и решения
-1. Ошибка NameError: name 'bow_vectorizer' is not defined
+# Возможные проблемы и решения
+## 1. Ошибка NameError: name 'bow_vectorizer' is not defined
 Проблема: В исходном коде допущена опечатка - переменные векторизаторов не сохраняются при вызове методов.
 
 Решение: Убедитесь, что в коде методы apply_bow и apply_tfidf возвращают три значения, а не два. Строки вызова должны сохранять векторизаторы:
@@ -142,36 +142,34 @@ sms-spam-detection/
 python
 X_bow, bow_vectorizer, bow_time = classic.apply_bow(s_processed)
 X_tfidf, tfidf_vectorizer, tfidf_time = classic.apply_tfidf(s_processed)
-2. Ошибка FileNotFoundError: spam.csv
+## 2. Ошибка FileNotFoundError: spam.csv
 Проблема: Файл датасета не найден в текущей директории.
 
 Решение: Убедитесь, что файл spam.csv находится в той же папке, что и app.py. Файл должен присутствовать в репозитории.
 
-3. Ошибка torch или transformers не устанавливаются
+## 3. Ошибка torch или transformers не устанавливаются
 Проблема: PyTorch может требовательную версию Python или иметь конфликты с другими пакетами.
 
 Решение: Установите PyTorch отдельно по инструкции с официального сайта. Для CPU-версии:
 
-bash
+
 pip install torch --index-url https://download.pytorch.org/whl/cpu
 Затем установите остальные зависимости:
 
-bash
 pip install transformers scikit-learn pandas numpy matplotlib nltk gensim
-4. Нехватка оперативной памяти при выполнении BERT
+## 4. Нехватка оперативной памяти при выполнении BERT
 Проблема: Модель BERT требует много RAM (8+ GB), на слабых компьютерах процесс может прерваться.
 
 Решение: Если компьютер имеет менее 8 GB RAM, BERT может не запуститься. В этом случае рекомендуется закомментировать вызовы BERT в функции main() или использовать только классические методы (BoW, TF-IDF, Word2Vec).
 
-5. Ошибка LookupError: Resource punkt not found
+## 5. Ошибка LookupError: Resource punkt not found
 Проблема: NLTK данные не скачались автоматически из-за отсутствия интернета или прав доступа.
 
 Решение: Скачайте данные вручную перед первым запуском:
 
-bash
 python -c "import nltk; nltk.download('punkt'); nltk.download('stopwords')"
 Созданные файлы
-После успешного выполнения скрипта в папке с проектом появятся:
+# После успешного выполнения скрипта в папке с проектом появятся:
 
 Файл	Описание
 results_comparison.csv	Метрики моделей на фиксированном разбиении (80/20)
@@ -190,5 +188,5 @@ BERT обрабатывает только первые 2000 сообщений 
 
 Кросс-валидация использует 5 стратифицированных фолдов
 
-Лицензия
+# Лицензия
 Проект создан в рамках выпускной квалификационной работы.
