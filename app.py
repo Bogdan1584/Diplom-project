@@ -29,9 +29,36 @@ print("Проверка ресурсов NLTK...")
 nltk.download('punkt', quiet=True)
 nltk.download('stopwords', quiet=True)
 
+df = pd.read_csv('spam.csv', encoding='latin-1')
+df = df[['v1', 'v2']]               
+df.columns = ['label', 'message']  
 
-# ГЛАВА 2.1 ЗАГРУЗКА ДАТАСЕТА
+nltk.download('punkt_tab')
+nltk.download('stopwords')
 
+from nltk.corpus import stopwords
+from nltk.stem import PorterStemmer
+import re
+from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
+
+texts = df['message'].astype(str).tolist()
+
+stop_words = set(stopwords.words('english'))
+stemmer = PorterStemmer()
+
+def preprocess_text(text):
+    text = re.sub(r'[^a-zA-Z]', ' ', text.lower())
+    words = [stemmer.stem(w) for w in text.split() if w not in stop_words]
+    return ' '.join(words)
+
+processed_texts = [preprocess_text(t) for t in texts]  
+bow_vectorizer = CountVectorizer()
+X_bow = bow_vectorizer.fit_transform(processed_texts)
+
+tfidf_vectorizer = TfidfVectorizer()
+X_tfidf = tfidf_vectorizer.fit_transform(processed_texts)
+
+print("Векторизаторы обучены успешно")
 
 class SMSLoader:
     def load(self):
